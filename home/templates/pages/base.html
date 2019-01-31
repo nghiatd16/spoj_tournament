@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script lang="JavaScript">
+        $(function(){
+
+            $(".dropdown-menu").on('click', 'li a', function(){
+                $(".btn:first-child").text($(this).text());
+                $(".btn:first-child").val($(this).text());
+            });
+
+        });
+    </script>
+    <title>{% block title %}{% endblock  %}</title>
+    <style>
+        html, body{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" style="min-height: 92%">
+        <div class="row">
+            <div class="col-sm-2">
+                <center><img src="{% static 'images/proptit.png' %}" class="responsive-img" style="max-height: 150px" alt="PROPTIT avatar"></center>
+            </div>
+            <div class="col-sm-10">
+                <center><h1>SPOJ Tournament</h1></center>
+            </div>
+        </div> 
+        <br>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="bs-sliderbar">
+                    <ul class="nav flex-column">
+                        <a href="https://www.spoj.com/PTIT/problems/EXCEL/">EXCEL</a>
+                        <br>
+                        <a href="https://www.spoj.com/PTIT/problems/BCNEPER/">BCNEPER</a>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="container-fluid">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <div class="container">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Bùi Phương Ngọc Mai
+                                        <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bùi Phương Ngọc Mai</a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </tr>
+                            <tr>
+                                <h5 style="color: coral">{{mem_a.full_name}}</h5>
+                            </tr>
+                            <td style="color: coral">Solved {{mem_a.num_solved}}</td>
+                            {% for row in lst_solved_a%}
+                                <tr>
+                                    {% for col in row%}
+                                        <td><a href="{{col.1}}">{{col.0}}</a></td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="container-fluid">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <div class="container">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Nguyễn Việt Hương
+                                        <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bùi Phương Ngọc Mai</a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </tr>
+                            <tr>
+                                <h5 style="color: coral">{{mem_b.full_name}}</h5>
+                            </tr>
+                            <td style="color: coral">Solved {{mem_b.num_solved}}</td>
+                            {% for row in lst_solved_b%}
+                                <tr>
+                                    {% for col in row%}
+                                        <td><a href="{{col.1}}">{{col.0}}</a></td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+<footer>
+        <dir class="container-fluid" style="color: gray">
+            Made by IBP | Powered by Python Django
+        </dir>
+</footer>
+</html>
