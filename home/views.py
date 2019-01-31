@@ -17,9 +17,12 @@ def index(request):
     lst_mem = Member.objects.all()
     # update_members(lst_mem)
     mem_a = Member.objects.get(id=mem_a_id)
-    
-    Data['mem_a'] = mem_a
     mem_b = Member.objects.get(id=mem_b_id)
+    lst_mems = [mem_a, mem_b]
+    update_members(lst_mems)
+    mem_a = Member.objects.get(id=mem_a_id)
+    mem_b = Member.objects.get(id=mem_b_id)
+    Data['mem_a'] = mem_a
     Data['mem_b'] = mem_b
     lst_unsolved_a, lst_unsolved_b = mem_a.get_list_exclude(mem_b)
     lst_2d_unsolved_a = Member.reshape_list(lst_unsolved_a, col_per_row=4)
