@@ -12,8 +12,8 @@ def index(request):
         mem_b_id = int(data_dict['select_b'])
         # x.readlines
     else:
-        mem_a_id = 1
-        mem_b_id = 1
+        mem_a_id = 2
+        mem_b_id = 2
     lst_mem = Member.objects.all()
     # update_members(lst_mem)
     mem_a = Member.objects.get(id=mem_a_id)
@@ -37,7 +37,14 @@ def statistics(request):
     dict_probs = {}
     for prob in lst_probs:
         dict_probs[prob.code] = prob.score
-    data = convert_dict(num_solved_each_problem(lst_probs, Member.objects.all()), reverse=True)
+    reverse_flag = True
+    if request.method == "POST":
+        post_flag = request.POST.dict()['select_order']
+        if post_flag == "1":
+            reverse_flag = True
+        else:
+            reverse_flag = False
+    data = convert_dict(num_solved_each_problem(lst_probs, Member.objects.all()), reverse=reverse_flag)
     Data['lst_racer'] = data[:200]
-    Data['lst_score'] = convert_dict(dict_probs, reverse=True)[:200]
+    Data['lst_score'] = convert_dict(dict_probs, reverse=reverse_flag)[:200]
     return render(request, 'pages/statistics.html', Data)

@@ -41,17 +41,19 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="col-md-4">
-                    <div class="container-fluid">
-                        <button type="submit" class="btn btn-info" enctype="multipart/form-data">Thống Kê</button>
-                        <div><br></div>
-                        <div class="custom-select" style="width:200px;">
-                            <select name="select_order">
-                                <option value="1">Giảm Dần</option>
-                                <option value="2">Tăng Dần</option>
-                                <option value="1">Giảm Dần</option>
-                            </select>
+                    <form action="" method="POST">
+                        <div class="container-fluid">
+                            <button type="submit" class="btn btn-info" enctype="multipart/form-data">Thống Kê</button>
+                            <div><br></div>
+                            <div class="custom-select" style="width:200px;">
+                                <select name="select_order">
+                                    <option value="1">Giảm Dần</option>
+                                    <option value="2">Tăng Dần</option>
+                                    <option value="1">Giảm Dần</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </form>
         </div>
