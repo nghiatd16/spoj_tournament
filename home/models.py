@@ -1,21 +1,28 @@
 from django.db import models
 import numpy as np
 import math
+import time
 # Create your models here.
 class Member(models.Model):
     full_name = models.CharField(max_length=100)
     username = models.CharField(max_length=20)
     grade = models.CharField(max_length=5)
     num_solved = models.IntegerField()
+    score = models.FloatField(default=0)
+    target = models.IntegerField(default=1)
     lst_solved = models.CharField(max_length=15000)
     lastrank = models.IntegerField(default=1)
+    
     
     def parse_lst_solved(self, col_per_row=4):
         lst_str_solved = self.lst_solved.__str__().split(' ')
         return Member.reshape_list(lst_str_solved, col_per_row=col_per_row)
 
+    def get_list_solved(self):
+        return self.lst_solved.__str__().strip().split(' ')
+
     def get_set_solved(self):
-        return set(self.lst_solved.__str__().split(' '))
+        return set(self.lst_solved.__str__().strip().split(' '))
 
     def get_list_exclude(self, other):
         self_set_str_solved = set(self.lst_solved.__str__().split(' '))
@@ -45,18 +52,25 @@ class Member(models.Model):
             res.append(tmp)
         return res
     
+    def __str__(self):
+        return "[{} - {} - {}]".format(self.full_name, self.num_solved, self.target)
+
     def __eq__(self, other):
-        if self.username == other.username:
+        if self.score == other.score and self.num_solved == other.num_solved and self.username == other.username:
             return True
         return False
     
     def __gt__(self, other):
-        if self.num_solved != other.num_solved:
+        if self.score != other.score:
+            return self.score > other.score
+        if self.num_solved != num_solved:
             return self.num_solved > other.num_solved
         return self.username > other.username
     
     def __lt__(self, other):
-        if self.num_solved != other.num_solved:
+        if self.score != other.score:
+            return self.score < other.score
+        if self.num_solved != num_solved:
             return self.num_solved < other.num_solved
         return self.username < other.username
 

@@ -25,10 +25,10 @@
         </div> 
         <br>
         <div class="row">
-            <dir class="col-md-2">
+            <div class="col-md-2">
                 <div class="bs-sliderbar">
                     <ul class="nav flex-column">
-                        <a href="http://rank.proptit.ezyro.com">Bảng Xếp Hạng</a>
+                        <a href="../rank/">Bảng Xếp Hạng</a>
                         <br>
                         <br>
                         <b style="color: dodgerblue">Thống Kê</b>
@@ -37,72 +37,115 @@
                         <a href="../">Công Cụ So Sánh</a>
                     </ul>
                 </div>
-            </dir>
+            </div>
             <form action="" method="POST">
                 {% csrf_token %}
-                <div class="col-md-4">
-                    <form action="" method="POST">
-                        <div class="container-fluid">
-                            <button type="submit" class="btn btn-info" enctype="multipart/form-data">Thống Kê</button>
-                            <div><br></div>
-                            <div class="custom-select" style="width:200px;">
-                                <select name="select_order">
+                <div class = "row">
+                    <div class="col-md-1">
+                        <center><button type="submit" class="btn btn-info" enctype="multipart/form-data">Thống Kê</button></center>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <center>
+                            <div class="custom-select" style="width:215px;">
+                                <select name="selected_mem">
+                                        <option value="{{selected_mem.id}}">{{selected_mem.full_name}}</option>
+                                    {% for mem in lst_members %}
+                                        {% if mem.id != selected_mem.id %}
+                                        <option value="{{mem.id}}">{{mem.full_name}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                        </center>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <center>
+                            <div class="custom-select" style="width:215px;">
+                                <select name="select_order_score">
                                     <option value="1">Giảm Dần</option>
                                     <option value="2">Tăng Dần</option>
                                     <option value="1">Giảm Dần</option>
                                 </select>
                             </div>
+                        </center>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="custom-select" style="width:215px;">
+                            <select name="select_order_racer">
+                                <option value="1">Giảm Dần</option>
+                                <option value="2">Tăng Dần</option>
+                                <option value="1">Giảm Dần</option>
+                            </select>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </form>
-        </div>
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-5">
-                <div class="container-fluid">
-                    
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <h4 style="color: dodgerblue">Sắp xếp theo số điểm</h4>
-                            </tr>
-                            <tr>
-                                <td>Mã Bài</td>
-                                <td>Điểm</td>
-                            </tr>
-                            {% for row in lst_score%}
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <div class="container-fluid">
+                        
+                        <div class="table-responsive">
+                            <table class="table">
                                 <tr>
-                                    <td><a href="{{row.1}}">{{row.0}}</a></td>
-                                    <td>{{row.2}}</td>
+                                    <h4 style="color: dodgerblue">Sắp xếp theo số điểm</h4>
                                 </tr>
-                            {% endfor %}
-                        </table>
+                                <tr>
+                                    <td>Mã Bài</td>
+                                    <td>Điểm</td>
+                                    <td>Trạng Thái</td>
+                                </tr>
+                                {% for row in lst_score%}
+                                    <tr>
+                                        <td><a href="{{row.1}}">{{row.0}}</a></td>
+                                        <td>{{row.2}}</td>
+                                        {% if row.3 == "1" %}
+                                        <td style="color: rgb(42, 170, 82);">&#x2714</td>
+                                        {% else %}
+                                        <td style="color: rgb(212, 19, 19);">&#x2717</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="container-fluid">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <h4 style="color: dodgerblue">Sắp xếp theo số racer đã giải</h4>
+                                </tr>
+                                <tr>
+                                    <td>Mã Bài</td>
+                                    <td>Số người đã giải</td>
+                                    <td>Trạng Thái</td>
+                                </tr>
+                                {% for row in lst_racer%}
+                                    <tr>
+                                        <td><a href="{{row.1}}">{{row.0}}</a></td>
+                                        <td>{{row.2}}</td>
+                                        {% if row.3 == "1" %}
+                                        <td style="color: rgb(42, 170, 82);">&#x2714</td>
+                                        {% else %}
+                                        <td style="color: rgb(212, 19, 19);">&#x2717</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-5">
-                <div class="container-fluid">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <h4 style="color: dodgerblue">Sắp xếp theo số racer đã giải</h4>
-                            </tr>
-                            <tr>
-                                <td>Mã Bài</td>
-                                <td>Số người đã giải</td>
-                            </tr>
-                            {% for row in lst_racer%}
-                                <tr>
-                                    <td><a href="{{row.1}}">{{row.0}}</a></td>
-                                    <td>{{row.2}}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
+        
     </div>
 <script>
     var x, i, j, selElmnt, a, b, c;

@@ -107,12 +107,54 @@ def update_members(lst_members, condition=None):
         mem.lst_solved = str_res
         mem.save()
     
-def convert_dict(input_dict, prefix_url = "https://www.spoj.com/PTIT/problems/", reverse=False):
+def convert_dict(input_dict, member, prefix_url = "https://www.spoj.com/PTIT/problems/", reverse=False):
     if prefix_url[-1] != '/':
         prefix_url += '/'
+    reference_set = member.get_set_solved()
     res = []
     lst_keys = sorted(input_dict, key=input_dict.get, reverse=reverse)
     for code in lst_keys:
-        tmp = (code, "{}{}/".format(prefix_url, code), input_dict[code])
+        if code in reference_set:
+            tmp = (code, "{}{}/".format(prefix_url, code), input_dict[code], "1")
+        else:
+            tmp = (code, "{}{}/".format(prefix_url, code), input_dict[code], "0")
         res.append(tmp)
+    return res
+
+def calculate_score_members(lst_mems):
+    for mem in lst_mems:
+        set_solved = mem.get_set_solved()
+        total_score = 0
+        for prob_code in set_solved:
+            try:
+                prob_obj = Problem.objects.get(code=prob_code)
+                total_score += prob_obj.score
+            except Exception as e:
+                print(e)
+                print(prob_code, len(prob_code), mem)
+        mem.score = total_score
+        mem.save()
+
+def get_lst_str_progress(lst_mems):
+    res = []
+    for mem in lst_mems:
+        prog = round(mem.num_solved*100/mem.target, 2)
+        if mem.num_solved >= mem.target:
+            print(mem)
+            res.append("DONE")
+        else:
+            res.append(str(prog) + "%")
+    return res
+
+def get_lst_str_score(lst_mems):
+    res = []
+    for mem in lst_mems:
+        prog = round(mem.score, 2)
+        res.append(str(prog))
+    return res
+
+def get_lst_str_rank_delta(lst_mems):
+    res = []
+    for idx, mem in enumerate(lst_mems):
+        res.append(mem.lastrank-idx-1)
     return res
