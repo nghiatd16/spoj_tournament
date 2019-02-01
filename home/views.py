@@ -82,5 +82,5 @@ def ranking(request):
 
 def update_database_all_member(request):
     lst_members = Member.objects.all()
-    update_members(lst_members[:2])
+    update_members(lst_members)
     return HttpResponse(content="OK")
